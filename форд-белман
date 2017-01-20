@@ -1,0 +1,65 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Graph
+{
+    public class GraphAlgoritm
+    {
+
+        public double[] Ford(double[,] matrixWeight)
+        {
+            double[] rowM = new double[matrixWeight.GetLength(1)];
+
+            for (int i = 0; i < matrixWeight.GetLength(0); i++)
+            {
+                rowM[i] = double.NaN;
+            }
+            rowM[0] = 0;
+            for (int i = 0; i < matrixWeight.GetLength(1); i++)
+            {
+                for (int j = 0; j < matrixWeight.GetLength(1); j++)
+                {
+                    if (!double.IsNaN(matrixWeight[i, j]) &&
+                        (rowM[i] + matrixWeight[i, j] < rowM[j] || double.IsNaN(rowM[j])))
+                    {
+                        rowM[j] = rowM[i] + matrixWeight[i, j];
+                    }
+                }
+            }
+            return rowM;
+        }
+
+        public double[] FB(int n, int m, int[,] edges, int v)
+        {
+            double[] t = new double[1000];
+            if (edges.Length != 3)
+                throw new Exception();
+            --v;
+            for (int i = 0; i < n; ++i) t[i] = double.MaxValue;
+            t[v] = 0;
+            for (int i = 1; i <= n; ++i)
+            {
+                for (int j = 0; j < m; ++j)
+                {
+                    if (t[edges[0, j]] < double.MaxValue && t[edges[0, j]] + edges[2, j] < t[edges[1, j]])
+                    {
+                        if (i != n)
+                            t[edges[1, j]] = t[edges[0, j]] + edges[2, j];
+                        else throw new Exception();
+                    }
+                }
+            }
+            var fb = new double[n];
+            for (int i = 0; i < n; ++i)
+            {
+                if (t[i] == double.MaxValue)
+                    fb[i] = double.NaN;
+                else
+                    fb[i] = t[i];
+            }
+            return fb;
+        }
+    }
+}
