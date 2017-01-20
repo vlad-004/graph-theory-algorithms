@@ -1,0 +1,64 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace TestConsole
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            double[,] matrixWeight = new double[8, 8];
+            double[] h = new double[8];
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    matrixWeight[i, j] = double.NaN;
+                }
+            }
+            matrixWeight[0, 1] = 1;
+            matrixWeight[0, 2] = 5;
+            matrixWeight[0, 4] = 10;
+            matrixWeight[1, 0] = 1;
+            matrixWeight[1, 2] = 1;
+            matrixWeight[1, 3] = 2;
+            matrixWeight[2, 0] = 5;
+            matrixWeight[2, 1] = 1;
+            matrixWeight[2, 3] = 2;
+            matrixWeight[2, 4] = 2;
+            matrixWeight[2, 6] = 2;
+            matrixWeight[3, 1] = 2;
+            matrixWeight[3, 2] = 2;
+            matrixWeight[3, 5] = 19;
+            matrixWeight[4, 0] = 10;
+            matrixWeight[4, 2] = 2;
+            matrixWeight[4, 6] = 7;
+            matrixWeight[5, 3] = 19;
+            matrixWeight[5, 6] = 10;
+            matrixWeight[5, 7] = 3;
+            matrixWeight[6, 2] = 2;
+            matrixWeight[6, 4] = 7;
+            matrixWeight[6, 5] = 10;
+            matrixWeight[7, 5] = 3;
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    if (double.IsNaN(matrixWeight[i, j])) Console.Write("-\t");
+                    else  Console.Write("{0}\t", matrixWeight[i, j]);
+                }
+                Console.WriteLine();
+            }
+            Graph.GraphAlgoritm graf = new Graph.GraphAlgoritm();
+            Console.WriteLine(" это ответ  алгоритма форда");
+            foreach (var item in graf.Ford(matrixWeight))
+            {
+                Console.Write("{0}\t",item); 
+            }
+            
+            Console.ReadKey();
+        }
+    }
+}
